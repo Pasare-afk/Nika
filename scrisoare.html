@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NIKUSEA LA MULTI ANI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffeaf4, #e6faff);
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .box {
+      width: 90%;
+      max-width: 500px;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    img.animated-img {
+      width: 150px;
+      animation: swing 4s infinite ease-in-out;
+      margin-bottom: 20px;
+    }
+    img {
+      width: 150px;
+      height: auto;
+    }
+
+    @keyframes swing {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(45deg); }
+      50% { transform: rotate(0deg); }
+      75% { transform: rotate(-45deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    h2 { color: #ff69b4; font-size: 2rem; margin: 10px 0; }
+    h3 { color: #6a5acd; font-size: 1.8rem; margin: 10px 0; }
+    h5 { color: #888; margin: 15px 0; }
+
+    button {
+      background-color: #ffb6c1;
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 15px;
+      box-shadow: 0 5px 10px rgba(255, 182, 193, 0.4);
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff91a4;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .letter {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 90%;
+      max-width: 600px;
+      height: 70vh;
+      background: #fff9f9;
+      border: 4px double #ffc0cb;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(255, 192, 203, 0.8);
+      overflow-y: auto;
+      display: none;
+    }
+
+    .letter p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      color: #ff69b4;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #chimieBtn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      padding: 14px 20px;
+      background: #a259e6;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.5rem;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(162,89,230,0.2);
+      z-index: 9999;
+      transition: background 0.2s;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #chimieBtn:hover {
+      background: #9048cc;
+    }
+
+    #jsi-butterfly-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 998;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      display: none;
+    }
+    #jsi-butterfly-container.visible {
+      opacity: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" autoplay style="display: none;">
+    <source src="sailor.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="container">
+    <div id="step1" class="box">
+      <img src="hello_kitty.jpg" class="animated-img" alt="imagine drăguță">
+      <h2>LA MULTI ANI</h2>
+      <h3>NIKA!!</h3>
+      <h5>apasa pe buton pentru a afla o surpriză</h5>
+      <button onclick="goToStep(2)">Surpriza 🎁</button>
+    </div>
+
+    <div id="step2" class="box hidden">
+      <img src="scrisoare.jpg" alt="scrisoare închisă" style="margin-bottom: 20px;">
+      <h3>Vrei să deschizi această scrisoare?</h3>
+      <button onclick="goToStep(4)">Da</button>
+      <button onclick="goToStep(3)">Nu</button>
+    </div>
+
+    <div id="step3" class="box hidden">
+      <img src="https://mystickermania.com/cdn/stickers/noob-pack/sanrio-hello-kitty-crying-512x512.png" alt="awww">
+      <h3>AWW, poate te mai gândești? PLSS?</h3>
+      <button onclick="goToStep(1)">Gândește-te încă o dată</button>
+    </div>
+  </div>
+
+  <div id="letter" class="letter">
+    <button class="close-btn" onclick="closeLetter()">×</button>
+     <p>
+    Dragă Nika,<br><br>
+    La mulți ani, meriți tot ce e mai bun în lume. Ai fost și ești o colegă de bancă extraordinară. Mă bucur că te-am cunoscut și am reușit să creăm nu doar amintiri, ci și o legătură extraordinar de puternică, cum nu am avut cu nimeni altcineva.<br><br>
+    Anul acesta a fost unul extrem de greu, mai ales pentru că 90% din zilele de școală au fost triste. Dar tu ai reușit mereu să-mi aduci zâmbetul pe față. Mulțumesc pentru toate momentele create de-a lungul anului — nu le voi uita niciodată. Mai ales cum totul a început de la o simplă lecție de chimie și, brusc, am început să formăm o legătură mai puternică decât N₂ (totuși, chiar și cu o legătură triplă, noi suntem mereu cea sigma 🧪).<br><br>
+    Pe parcursul anului am dat share la atât de multe idei și gânduri, că am devenit foarte close. Am demonstrat unui altuia că putem avea încredere și îți mulțumesc pentru asta — aveam nevoie de această prietenie extraordinară.<br><br>
+    We are invincible together and there is no power stronger than our friendship.<br><br>
+    EȘTI O PRIETENĂ EXTRAORDINARĂ și îți mulțumesc că ai fost alături de mine tot anul, colega mea de bancă. Am bârfit, am zâmbit, am plâns, am copiat — dar totul, împreună.<br><br>
+    Și dacă asta nu a fost destul, îți mulțumesc ENORM pentru:<br>
+    <ol style="font-family: 'Comic Sans MS', cursive; font-size: 1rem; color: #444; padding-left: 20px;">
+      <li>personalitatea ta unică</li>
+      <li>glumele tale</li>
+      <li>bunătatea ta</li>
+      <li>că m-ai ascultat</li>
+      <li>că mi-ai ținut spatele</li>
+      <li>că ai fost pe aceeași undă cu autismul meu</li>
+      <li>că nu m-ai judecat</li>
+      <li>că suntem matching la braincell 🧠</li>
+      <li>că nu mă faci să mă simt singur</li>
+      <li>că m-ai ajutat de la prima ocazie</li>
+      <li>că mă înțelegi</li>
+      <li>că ai fost mai bună decât persoane pe care le-am cunoscut de mai mult timp</li>
+      <li>că ai fost loială</li>
+      <li>că mi-ai ținut secretele în siguranță</li>
+      <li>că ai fost mereu onestă</li>
+      <li>că ești o prietenă bună</li>
+      <li>că mă faci înțeles</li>
+      <li>că ești mixul perfect dintre chaos și calm</li>
+      <li>că transmiți numai fericire</li>
+      <li>că am creat cele mai bune momente împreună</li>
+      <li>că ești silly 🤪</li>
+      <li>că ai făcut cele mai întunecate zile de școală puțin mai însorite</li>
+      <li>că nu ești fake!!!</li>
+    </ol>
+    <br>
+    LA MULȚI ANI, PUPSIK!!! 💖
+  </p>
+  </div>
+
+  <button id="chimieBtn" onclick="window.location.href='artificii.html'">&#8594;</button>
+
+  <div id="jsi-butterfly-container"></div>
+
+  <script>
+    const music = document.getElementById('bgMusic');
+
+    function goToStep(step) {
+      document.querySelectorAll('.box').forEach(el => el.classList.add('hidden'));
+
+      if (step === 4) {
+        document.getElementById('letter').style.display = 'block';
+        document.getElementById('chimieBtn').style.display = 'flex';
+
+        const butterflies = document.getElementById('jsi-butterfly-container');
+        butterflies.style.display = 'block';
+        setTimeout(() => butterflies.classList.add('visible'), 50);
+
+        music.currentTime = 22;
+        music.play().catch(() => {});
+      } else {
+        document.getElementById('letter').style.display = 'none';
+        document.getElementById('chimieBtn').style.display = 'none';
+
+        const butterflies = document.getElementById('jsi-butterfly-container');
+        butterflies.classList.remove('visible');
+        setTimeout(() => butterflies.style.display = 'none', 800);
+        document.getElementById('step' + step).classList.remove('hidden');
+      }
+    }
+
+    function closeLetter() {
+      document.getElementById('letter').style.display = 'none';
+      document.getElementById('chimieBtn').style.display = 'none';
+
+      const butterflies = document.getElementById('jsi-butterfly-container');
+      butterflies.classList.remove('visible');
+      setTimeout(() => butterflies.style.display = 'none', 800);
+
+      document.querySelectorAll('.box').forEach(el => el.classList.add('hidden'));
+      document.getElementById('step2').classList.remove('hidden');
+    }
+  </script>
+
+  <script>
+    // TOT CODUL FLUTURILOR INTEGRAT AICI
+    let RENDERER = {
+  init: function () {
+    this.setParameters();
+    this.reconstructMethods();
+    this.render();
+  },
+  setParameters: function () {
+    this.$container = $("#jsi-butterfly-container");
+    this.width = this.$container.width();
+    this.height = this.$container.height();
+    this.context = $("<canvas />")
+      .attr({ width: this.width, height: this.height })
+      .appendTo(this.$container)
+      .get(0)
+      .getContext("2d");
+    this.butterflies = [new BUTTERFLY(this)];
+    this.particles = [];
+    this.count = this.getRandomValue(100, 300);
+  },
+  reconstructMethods: function () {
+    this.render = this.render.bind(this);
+  },
+  getRandomValue: function (min, max) {
+    return min + (max - min) * Math.random();
+  },
+  render: function () {
+    requestAnimationFrame(this.render);
+
+    let context = this.context;
+    context.save();
+    context.fillStyle = "rgba(0, 0, 0, 0.3)";
+    context.fillRect(0, 0, this.width, this.height);
+    context.globalCompositeOperation = "lighter";
+
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      if (!this.particles[i].render(context)) {
+        this.particles.splice(i, 1);
+      }
+    }
+    context.restore();
+
+    for (let i = this.butterflies.length - 1; i >= 0; i--) {
+      if (!this.butterflies[i].render(context)) {
+        this.butterflies.splice(i, 1);
+      }
+    }
+    if (--this.count < 0) {
+      this.count = this.getRandomValue(100, 300);
+      this.butterflies.push(new BUTTERFLY(this));
+    }
+  },
+};
+
+let BUTTERFLY = function (renderer) {
+  this.renderer = renderer;
+  this.init();
+};
+BUTTERFLY.prototype = {
+  DELTA_THETA: Math.PI / 50,
+  DELTA_PHI: Math.PI / 100,
+  THRESHOLD: 100,
+  DELTA_PARTICLE: 2,
+
+  init: function () {
+    this.theta = 0;
+    this.phi = 0;
+    this.x = this.renderer.getRandomValue(
+      this.THRESHOLD,
+      this.renderer.width - this.THRESHOLD
+    );
+    this.y = this.renderer.height + this.THRESHOLD;
+    this.vx = 0;
+    this.vy = -2;
+    this.swingRate = this.renderer.getRandomValue(0.5, 1);
+  },
+  createParticles: function () {
+    for (let i = 0; i < this.DELTA_PARTICLE; i++) {
+      this.renderer.particles.push(new PARTICLE(this.renderer, this.x, this.y));
+    }
+    return this.y >= -this.THRESHOLD;
+  },
+  render: function (context) {
+    context.save();
+    context.translate(this.x, this.y);
+    context.rotate(Math.atan2(this.vx, -this.vy) / 10);
+
+    for (let i = -1; i <= 1; i += 2) {
+      context.save();
+      context.scale(i, 1);
+
+      let gradient = context.createRadialGradient(0, 0, 0, 0, 0, 80),
+        rate = Math.sin(this.theta / 4);
+      gradient.addColorStop(0, "hsl(330, 80%, 40%)");
+      gradient.addColorStop(0.3, "hsl(330, 80%, " + (40 + 10 * rate) + "%)");
+      gradient.addColorStop(0.5, "hsl(330, 80%, " + (40 + 20 * rate) + "%)");
+      gradient.addColorStop(1, "hsl(330, 80%, " + (40 + 30 * rate) + "%)");
+
+      context.lineWidth = 3;
+      context.strokeStyle = "hsl(330, 80%, 80%)";
+      context.fillStyle = gradient;
+
+      context.save();
+      context.scale(0.8 + 0.2 * Math.cos(this.theta + Math.PI / 10), 1);
+      context.beginPath();
+      context.moveTo(-3, 0);
+      context.bezierCurveTo(-40, -10, -60, 20, -30, 40);
+      context.bezierCurveTo(-20, 50, -10, 50, -3, -5);
+      context.closePath();
+      context.fill();
+      context.stroke();
+      context.restore();
+
+      context.save();
+      context.scale(0.8 + 0.2 * Math.cos(this.theta), 1);
+      context.beginPath();
+      context.moveTo(-3, -5);
+      context.bezierCurveTo(-25, -60, -75, -55, -65, -35);
+      context.bezierCurveTo(-55, -10, -65, 5, -3, 0);
+      context.closePath();
+      context.fill();
+      context.stroke();
+      context.restore();
+
+      context.lineWidth = 2;
+      context.strokeStyle = "hsl(330, 80%, 80%)";
+      context.beginPath();
+      context.moveTo(-2, -10);
+      context.bezierCurveTo(
+        -5,
+        -20,
+        -3 - Math.sin(this.theta),
+        -30,
+        -8 - Math.sin(this.theta),
+        -40
+      );
+      context.stroke();
+      context.restore();
+    }
+    context.save();
+    let gradient = context.createLinearGradient(-3, 0, 3, 0);
+    gradient.addColorStop(0, "hsl(330, 100%, 70%)");
+    gradient.addColorStop(0.5, "hsl(330, 100%, 80%)");
+    gradient.addColorStop(1, "hsl(330, 100%, 70%)");
+    context.fillStyle = gradient;
+    context.beginPath();
+    context.moveTo(0, -10);
+    context.arc(0, -10, 3, 0, Math.PI * 2, false);
+    context.fill();
+
+    context.beginPath();
+    context.moveTo(3, -8);
+    context.arc(0, -8, 3, 0, Math.PI, false);
+    context.stroke();
+    context.arcTo(0, 60, 3, -8, 2);
+    context.fill();
+    context.restore();
+    context.restore();
+
+    this.theta += this.DELTA_THETA;
+    this.theta %= Math.PI * 4;
+    this.phi += this.DELTA_PHI;
+    this.phi %= Math.PI * 2;
+    this.vx = Math.sin(this.phi) * this.swingRate;
+    this.x += this.vx;
+    this.y += this.vy;
+    return this.createParticles();
+  },
+};
+
+let PARTICLE = function (renderer, x, y) {
+  this.renderer = renderer;
+  this.x = x;
+  this.y = y;
+  this.init();
+};
+PARTICLE.prototype = {
+  FRICTION: 0.99,
+  RADIUS: 2,
+  DELTA_OPACITY: 0.005,
+
+  init: function () {
+    this.x += this.renderer.getRandomValue(-50, 50);
+    let theta = this.renderer.getRandomValue(0, Math.PI * 2);
+    this.vx = Math.cos(theta);
+    this.vy = Math.sin(theta);
+    this.opacity = 1;
+  },
+  render: function (context) {
+    context.save();
+    context.translate(this.x, this.y);
+    context.scale(2 - this.opacity, 2 - this.opacity);
+    context.beginPath();
+    context.fillStyle = "hsla(330, 100%, 70%, " + this.opacity + ")";
+    context.arc(0, 0, this.RADIUS, 0, Math.PI * 2, false);
+    context.fill();
+    context.restore();
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vx *= this.FRICTION;
+    this.vy *= this.FRICTION;
+    this.opacity = Math.max(0, this.opacity - this.DELTA_OPACITY);
+    return this.opacity > 0;
+  },
+};
+
+    $(function () {
+      RENDERER.init();
+    });
+  </script>
+</body>
+</html>
